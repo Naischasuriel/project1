@@ -22,6 +22,13 @@ function initTimer() {
     }
 }
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
 function flipCard({target: clickedCard}) {
     if(!isPlaying) {
         isPlaying = true;
@@ -78,14 +85,12 @@ function shuffleCard() {
     disableDeck = isPlaying = false;
 
     let arr = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6];
-    arr.sort(() => Math.random() > 0.5 ? 1 : -1);
+    shuffleArray(arr);
 
     cards.forEach((card, index) => {
         card.classList.remove("flip");
         let imgTag = card.querySelector(".back-view img");
-        setTimeout(() => {
-            //imgTag.src = `images/img-${arr[index]}.png`;
-        }, 500);
+        imgTag.src = `images/image${arr[index]}.png`;
         card.addEventListener("click", flipCard);
     });
 }
